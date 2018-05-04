@@ -27,12 +27,17 @@ public class PlayerController : MonoBehaviour
     public GameObject mesh;
     public GameObject grabbableMarkerPrefab;
     public Transform grabHoldPoint;
+    public Transform centerPoint;
 
+    public delegate void InjuryHandler(int injuryLevel);
+    public event InjuryHandler OnInjuryUpdate;
+
+    public bool IsFainted { get; private set; }
     GrabbableObject currentGrabbable;
     GameObject grabbableMarker;
     new Rigidbody rigidbody;
-    bool isFainted;
     bool isGrabbing;
+    int injuryLevel;
 
     void Awake()
     {
@@ -43,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isFainted)
+        if (!IsFainted)
         {
             ApplyMovementInput();
         }
@@ -76,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
     void ApplyFakeGravity()
     {
-        if (!IsGrounded() || isFainted)
+        if (!IsGrounded() || IsFainted)
         {
             rigidbody.AddForce(Vector3.down * extraGravity, ForceMode.Acceleration);
         }
@@ -103,14 +108,20 @@ public class PlayerController : MonoBehaviour
     {
         rigidbody.constraints = RigidbodyConstraints.None;
         rigidbody.drag = 1;
-        isFainted = true;
+        IsFainted = true;
         Vector3 randomDirection = Random.insideUnitSphere;
         rigidbody.AddForce(randomDirection * faintForce, ForceMode.VelocityChange);
     }
 
     public void OnHit(HitInfo hitInfo)
     {
-        Faint();
+        injuryLevel += hitInfo.damage;
+        injuryLevel = Mathf.Min(injuryLevel, 100);
+        OnInjuryUpdate(injuryLevel);
+        if (injuryLevel == 100)
+        {
+            Faint();
+        }
     }
 
     void FindGrabbable()
