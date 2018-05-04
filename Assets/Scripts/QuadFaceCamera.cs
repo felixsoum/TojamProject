@@ -11,8 +11,21 @@ public class QuadFaceCamera : MonoBehaviour
         mainCam = Camera.main;
     }
 
+    void OnEnable()
+    {
+        Face();
+    }
+
     void Update()
     {
-        transform.forward = mainCam.transform.forward;
+        Face();
+    }
+
+    void Face()
+    {
+        if (mainCam)
+        {
+            transform.forward = mainCam.transform.forward;
+        }
     }
 }

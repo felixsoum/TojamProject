@@ -22,13 +22,17 @@ public class PlayerController : MonoBehaviour
     public float moveForce = 3;
     public float faintForce = 50;
     public float grabbableRange = 2;
+    public float throwForce = 10;
 
     public GameObject mesh;
     public GameObject grabbableMarkerPrefab;
+    public Transform grabHoldPoint;
 
+    GrabbableObject currentGrabbable;
     GameObject grabbableMarker;
     new Rigidbody rigidbody;
     bool isFainted;
+    bool isGrabbing;
 
     void Awake()
     {
@@ -48,7 +52,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        FindGrabbable();
+        if (!isGrabbing)
+        {
+            FindGrabbable();
+            GrabInput();
+        }
+        else
+        {
+            ThrowInput();
+        }
     }
 
     void ApplyMovementInput()
@@ -105,7 +117,7 @@ public class PlayerController : MonoBehaviour
     {
         var hits = Physics.SphereCastAll(transform.position, grabbableRange, Vector3.down, 0);
 
-        GameObject closestObject = null;
+        currentGrabbable = null;
         float closestDistance = float.MaxValue;
         
         foreach (var hit in hits)
@@ -115,20 +127,48 @@ public class PlayerController : MonoBehaviour
                 float distance = Vector3.Distance(hit.collider.transform.position, transform.position);
                 if (distance < closestDistance)
                 {
-                    closestObject = hit.collider.gameObject;
-                    closestDistance = distance;
+                    var grabbable = hit.collider.GetComponent<GrabbableObject>();
+                    if (grabbable && grabbable.IsGrabbable)
+                    {
+                        currentGrabbable = grabbable;
+                        closestDistance = distance;
+                    }
                 }
             }
         }
 
-        if (closestObject)
+        if (currentGrabbable)
         {
-            grabbableMarker.transform.position = closestObject.transform.position;
+            grabbableMarker.transform.position = currentGrabbable.transform.position;
             grabbableMarker.SetActive(true);
         }
         else
         {
             grabbableMarker.SetActive(false);
+        }
+    }
+
+    void GrabInput()
+    {
+        if (Input.GetMouseButtonDown(0) && currentGrabbable)
+        {
+            isGrabbing = true;
+            currentGrabbable.transform.parent = grabHoldPoint;
+            currentGrabbable.transform.localPosition = Vector3.zero;
+            var grabbable = currentGrabbable.GetComponent<GrabbableObject>();
+            grabbable.Grab();
+            grabbableMarker.SetActive(false);
+        }
+    }
+
+    void ThrowInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isGrabbing = false;
+            currentGrabbable.transform.parent = null;
+            var grabbable = currentGrabbable.GetComponent<GrabbableObject>();
+            grabbable.Throw(Camera.main.transform.forward * throwForce);
         }
     }
 }
