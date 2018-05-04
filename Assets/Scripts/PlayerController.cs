@@ -21,13 +21,20 @@ public class PlayerController : MonoBehaviour
     public float extraGravity = 100;
     public float moveForce = 3;
     public float faintForce = 50;
+    public float grabbableRange = 2;
+
     public GameObject mesh;
+    public GameObject grabbableMarkerPrefab;
+
+    GameObject grabbableMarker;
     new Rigidbody rigidbody;
     bool isFainted;
 
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        grabbableMarker = Instantiate(grabbableMarkerPrefab, transform.position, Quaternion.identity);
+        grabbableMarker.SetActive(false);
     }
 
     void FixedUpdate()
@@ -37,6 +44,11 @@ public class PlayerController : MonoBehaviour
             ApplyMovementInput();
         }
         ApplyFakeGravity();
+    }
+
+    void Update()
+    {
+        FindGrabbable();
     }
 
     void ApplyMovementInput()
@@ -87,5 +99,36 @@ public class PlayerController : MonoBehaviour
     public void OnHit(HitInfo hitInfo)
     {
         Faint();
+    }
+
+    void FindGrabbable()
+    {
+        var hits = Physics.SphereCastAll(transform.position, grabbableRange, Vector3.down, 0);
+
+        GameObject closestObject = null;
+        float closestDistance = float.MaxValue;
+        
+        foreach (var hit in hits)
+        {
+            if (hit.collider.tag == "Grabbable")
+            {
+                float distance = Vector3.Distance(hit.collider.transform.position, transform.position);
+                if (distance < closestDistance)
+                {
+                    closestObject = hit.collider.gameObject;
+                    closestDistance = distance;
+                }
+            }
+        }
+
+        if (closestObject)
+        {
+            grabbableMarker.transform.position = closestObject.transform.position;
+            grabbableMarker.SetActive(true);
+        }
+        else
+        {
+            grabbableMarker.SetActive(false);
+        }
     }
 }
