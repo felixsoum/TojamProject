@@ -2,14 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class HitInfo
+{
+    public int damage;
+    public Vector3 normal;
+
+    public HitInfo (int damage, Vector3 normal)
+    {
+        this.damage = damage;
+        this.normal = normal;
+    }
+}
+
 public class PlayerController : MonoBehaviour
 {
     public float meshLerpSpeed = 0.333f;
     public float groundDistance = 0.1f;
     public float extraGravity = 100;
     public float moveForce = 3;
+    public float faintForce = 50;
     public GameObject mesh;
     new Rigidbody rigidbody;
+    bool isFainted;
 
     void Awake()
     {
@@ -18,7 +32,10 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        ApplyMovementInput();
+        if (!isFainted)
+        {
+            ApplyMovementInput();
+        }
         ApplyFakeGravity();
     }
 
@@ -35,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
     void ApplyFakeGravity()
     {
-        if (!IsGrounded())
+        if (!IsGrounded() || isFainted)
         {
             rigidbody.AddForce(Vector3.down * extraGravity, ForceMode.Acceleration);
         }
@@ -56,5 +73,19 @@ public class PlayerController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    void Faint()
+    {
+        rigidbody.constraints = RigidbodyConstraints.None;
+        rigidbody.drag = 1;
+        isFainted = true;
+        Vector3 randomDirection = Random.insideUnitSphere;
+        rigidbody.AddForce(randomDirection * faintForce, ForceMode.VelocityChange);
+    }
+
+    public void OnHit(HitInfo hitInfo)
+    {
+        Faint();
     }
 }

@@ -13,7 +13,6 @@ public class PlayerCamera : MonoBehaviour
     GameObject player;
     float rotY;
 
-
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;

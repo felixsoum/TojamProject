@@ -12,8 +12,6 @@ public class PressMachine : MonoBehaviour, ITriggerable
     new Rigidbody rigidbody;
     Vector3 initialPos;
 
-
-
     void Awake()
     {
         timeSincePress = timeToReset;
@@ -45,5 +43,14 @@ public class PressMachine : MonoBehaviour, ITriggerable
     public void Trigger()
     {
         Press();
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            var player = collision.gameObject.GetComponent<PlayerController>();
+            player.OnHit(new HitInfo(100, collision.contacts[0].normal));
+        }
     }
 }
