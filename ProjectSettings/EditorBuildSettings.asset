@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: ffba64f6f3e10074984c8ae3f61d64cd
+  - enabled: 1
+    path: Assets/Scenes/Levels/DrinkingBirdLevel.unity
+    guid: 03d54beca1d99034b95fd6c7d80497d0

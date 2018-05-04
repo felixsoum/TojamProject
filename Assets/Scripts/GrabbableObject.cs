@@ -28,6 +28,7 @@ public class GrabbableObject : MonoBehaviour
     public void Throw(Vector3 force)
     {
         rigidbody.isKinematic = false;
+        rigidbody.constraints = RigidbodyConstraints.None;
         rigidbody.AddForce(force, ForceMode.VelocityChange);
         Invoke("ResetGrabbable", GrabbableResetTime);
     }

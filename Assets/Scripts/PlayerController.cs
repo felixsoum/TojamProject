@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HitInfo
 {
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public float faintForce = 50;
     public float grabbableRange = 2;
     public float throwForce = 10;
+    public float timeUntilLevelEnd = 3;
 
     public GameObject mesh;
     public GameObject grabbableMarkerPrefab;
@@ -57,14 +59,27 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!isGrabbing)
+        if (!IsFainted)
         {
-            FindGrabbable();
-            GrabInput();
+            if (!isGrabbing)
+            {
+                FindGrabbable();
+                GrabInput();
+            }
+            else
+            {
+                ThrowInput();
+            }
         }
         else
         {
-            ThrowInput();
+            timeUntilLevelEnd -= Time.deltaTime;
+            timeUntilLevelEnd = Mathf.Max(timeUntilLevelEnd, 0);
+            if (timeUntilLevelEnd <= 0 && Input.GetMouseButtonDown(0))
+            {
+                Cursor.lockState = CursorLockMode.None;
+                SceneManager.LoadScene("Main");
+            }
         }
     }
 
@@ -164,10 +179,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && currentGrabbable)
         {
             isGrabbing = true;
-            currentGrabbable.transform.parent = grabHoldPoint;
-            currentGrabbable.transform.localPosition = Vector3.zero;
             var grabbable = currentGrabbable.GetComponent<GrabbableObject>();
             grabbable.Grab();
+            currentGrabbable.transform.parent = grabHoldPoint;
+            currentGrabbable.transform.localPosition = Vector3.zero;
             grabbableMarker.SetActive(false);
         }
     }
