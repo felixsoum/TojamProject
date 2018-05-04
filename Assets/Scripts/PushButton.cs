@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PushButton : MonoBehaviour
 {
+    public List<MonoBehaviour> triggerableScripts;
     public GameObject buttonMesh;
     public float pushedScaleY;
     public Material pushMat;
@@ -40,6 +41,15 @@ public class PushButton : MonoBehaviour
     {
         buttonMesh.transform.localScale = new Vector3(initialScale.x, pushedScaleY, initialScale.z);
         buttonMeshRenderer.material = pushMat;
+
+        foreach(var triggerableScript in triggerableScripts)
+        {
+            if (triggerableScript.gameObject)
+            {
+                var triggerable = (ITriggerable)triggerableScript;
+                triggerable.Trigger();
+            }
+        }
     }
 
     void Release()
