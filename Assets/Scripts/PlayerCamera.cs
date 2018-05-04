@@ -6,6 +6,7 @@ public class PlayerCamera : MonoBehaviour
 {
     public Vector3 offset = new Vector3(0, 3, -4);
     public float rotX = 15;
+    public float maxRotX = 60;
     public  float rotSpeedX = 10f;
     public  float rotSpeedY = 30f;
 
@@ -25,6 +26,8 @@ public class PlayerCamera : MonoBehaviour
         transform.position = player.transform.position + Quaternion.Euler(0, rotY, 0) * offset;
 
         rotX += -Input.GetAxis("Mouse Y") * rotSpeedX * Time.deltaTime;
-        rotY += Input.GetAxis("Mouse X") * rotSpeedX * Time.deltaTime;
+        rotX = Mathf.Clamp(rotX, -maxRotX, maxRotX);
+
+        rotY += Input.GetAxis("Mouse X") * rotSpeedY * Time.deltaTime;
     }
 }
