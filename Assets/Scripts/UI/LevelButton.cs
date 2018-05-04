@@ -9,7 +9,6 @@ public class LevelButton : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("hello");
         text.text = levelName;
     }
 

@@ -34,12 +34,16 @@ public class PlayerController : MonoBehaviour
     public delegate void InjuryHandler(int injuryLevel);
     public event InjuryHandler OnInjuryUpdate;
 
+    public delegate void SimpleHandler();
+    public event SimpleHandler OnLevelEnd;
+
     public bool IsFainted { get; private set; }
     GrabbableObject currentGrabbable;
     GameObject grabbableMarker;
     new Rigidbody rigidbody;
     bool isGrabbing;
     int injuryLevel;
+    bool isLevelEnded;
 
     void Awake()
     {
@@ -75,11 +79,17 @@ public class PlayerController : MonoBehaviour
         {
             timeUntilLevelEnd -= Time.deltaTime;
             timeUntilLevelEnd = Mathf.Max(timeUntilLevelEnd, 0);
-            if (timeUntilLevelEnd <= 0 && Input.GetMouseButtonDown(0))
+            if (timeUntilLevelEnd <= 0 && !isLevelEnded)
             {
-                Cursor.lockState = CursorLockMode.None;
-                SceneManager.LoadScene("Main");
+                isLevelEnded = true;
+                OnLevelEnd();
             }
+        }
+
+        if (isLevelEnded && Input.GetMouseButtonDown(0))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene("Main");
         }
     }
 
