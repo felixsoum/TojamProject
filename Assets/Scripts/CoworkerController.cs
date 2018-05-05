@@ -20,6 +20,7 @@ public class CoworkerController : MonoBehaviour
     NavMeshAgent agent;
     CoworkerState state = CoworkerState.Idle;
     new Rigidbody rigidbody;
+    bool isHarmful;
 
     void Awake()
     {
@@ -46,6 +47,7 @@ public class CoworkerController : MonoBehaviour
                 state = CoworkerState.Attack;
                 animator.SetTrigger("attack");
                 rigidbody.AddForce(chaseDir.normalized * attackLungeForce, ForceMode.VelocityChange);
+                isHarmful = true;
             }
             else
             {
@@ -58,8 +60,9 @@ public class CoworkerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "Player")
+        if (isHarmful && collision.collider.tag == "Player")
         {
+            isHarmful = false;
             var hits = Physics.RaycastAll(transform.position, transform.forward, punchBreakDistance);
             foreach (var hit in hits)
             {
@@ -99,6 +102,10 @@ public class CoworkerController : MonoBehaviour
 
     public void OnHit()
     {
-        state = CoworkerState.Chase;
+        if (state != CoworkerState.Chase)
+        {
+            state = CoworkerState.Chase;
+            agent.enabled = true;
+        }
     }
 }

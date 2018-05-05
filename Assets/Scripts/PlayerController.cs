@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public float grabbableRange = 2;
     public float throwForce = 10;
     public float timeUntilLevelEnd = 3;
+    public float injuryTimeReset = 1;
 
     public GameObject mesh;
     public GameObject grabbableMarkerPrefab;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
     bool isGrabbing;
     int injuryLevel;
     bool isLevelEnded;
+    float injuryTimer;
 
     void Awake()
     {
@@ -75,6 +77,14 @@ public class PlayerController : MonoBehaviour
             {
                 ThrowInput();
             }
+            if (injuryTimer > 0)
+            {
+                injuryTimer -= Time.deltaTime;
+                if (injuryTimer <= 0)
+                {
+                    ResetInjuryLevel();
+                }
+            }
         }
         else
         {
@@ -92,6 +102,12 @@ public class PlayerController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Main");
         }
+    }
+
+    void ResetInjuryLevel()
+    {
+        injuryLevel = 0;
+        OnInjuryUpdate(0);
     }
 
     void ApplyMovementInput()
@@ -154,15 +170,24 @@ public class PlayerController : MonoBehaviour
     {
         if (!IsFainted)
         {
-            injuryLevel += hitInfo.damage;
-            injuryLevel = Mathf.Min(injuryLevel, 100);
-            OnInjuryUpdate(injuryLevel);
+            AddInjuryLevel(hitInfo.damage);
             rigidbody.AddForce(hitInfo.force, ForceMode.VelocityChange);
             if (injuryLevel == 100)
             {
                 Faint();
             }
+            else
+            {
+                injuryTimer = injuryTimeReset;
+            }
         }
+    }
+
+    void AddInjuryLevel(int value)
+    {
+        injuryLevel += value;
+        injuryLevel = Mathf.Min(injuryLevel, 100);
+        OnInjuryUpdate(injuryLevel);
     }
 
     void FindGrabbable()
