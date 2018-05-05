@@ -8,11 +8,13 @@ public class PushButton : MonoBehaviour
     public GameObject buttonMesh;
     public float pushedScaleY;
     public Material pushMat;
+    public float timeBeforeRelease = 2;
 
     Material releaseMat;
     int triggerCount;
     Vector3 initialScale;
     MeshRenderer buttonMeshRenderer;
+    float releaseTimer;
 
     void Awake()
     {
@@ -23,31 +25,37 @@ public class PushButton : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (triggerCount++ == 0)
-        {
-            Push();
-        }
+        Push();
     }
 
-    void OnTriggerExit(Collider collider)
+    void Update()
     {
-        if (--triggerCount == 0)
+        if (releaseTimer > 0)
         {
-            Release();
+            releaseTimer -= Time.deltaTime;
+            if (releaseTimer < 0)
+            {
+                releaseTimer = 0;
+                Release();
+            }
         }
     }
 
     void Push()
     {
-        buttonMesh.transform.localScale = new Vector3(initialScale.x, pushedScaleY, initialScale.z);
-        buttonMeshRenderer.material = pushMat;
-
-        foreach(var triggerableScript in triggerableScripts)
+        if (releaseTimer == 0)
         {
-            if (triggerableScript.gameObject)
+            releaseTimer = timeBeforeRelease;
+            buttonMesh.transform.localScale = new Vector3(initialScale.x, pushedScaleY, initialScale.z);
+            buttonMeshRenderer.material = pushMat;
+
+            foreach (var triggerableScript in triggerableScripts)
             {
-                var triggerable = (ITriggerable)triggerableScript;
-                triggerable.Trigger();
+                if (triggerableScript.gameObject)
+                {
+                    var triggerable = (ITriggerable)triggerableScript;
+                    triggerable.Trigger();
+                }
             }
         }
     }

@@ -23,18 +23,26 @@ public class PlayerCamera : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
     }
 
-    private void OnInjuryUpdate(int injuryLevel)
-    {
-        throw new System.NotImplementedException();
-    }
-
     void Update()
     {
 
         transform.eulerAngles = new Vector3(rotX, rotY, 0);
         if (!playerController.IsFainted)
         {
-            transform.position = player.transform.position + Quaternion.Euler(0, rotY, 0) * offset;
+            Vector3 desiredPosition = player.transform.position + Quaternion.Euler(0, rotY, 0) * offset;
+
+            Vector3 camDirection = desiredPosition - player.transform.position;
+            var hits = Physics.RaycastAll(player.transform.position, camDirection.normalized, camDirection.magnitude);
+            foreach (var hit in hits)
+            {
+                if (hit.collider.tag == "Player" || hit.collider.tag == "Coworker")
+                {
+                    continue;
+                }
+                desiredPosition = hit.point;
+            }
+            transform.position = desiredPosition;
+
             rotX += -Input.GetAxis("Mouse Y") * rotSpeedX * Time.deltaTime;
             rotX = Mathf.Clamp(rotX, -maxRotX, maxRotX);
         }
