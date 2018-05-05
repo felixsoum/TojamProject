@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
             isGrabbing = false;
             currentGrabbable.transform.parent = null;
             var grabbable = currentGrabbable.GetComponent<GrabbableObject>();
-            grabbable.Throw(Camera.main.transform.forward * throwForce);
+            grabbable.Throw(mesh.transform.forward * throwForce);
             animator.SetTrigger("throw");
         }
     }

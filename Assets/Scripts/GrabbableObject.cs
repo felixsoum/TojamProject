@@ -2,12 +2,13 @@
 
 public class GrabbableObject : MonoBehaviour
 {
+    public bool canBreakObjects = false;
     public Collider restingCollider;
     public Collider thrownCollider;
     new Rigidbody rigidbody;
     public bool IsGrabbable { get; private set; }
     const float GrabbableResetTime = 1;
-    const float RespawnTime = 2;
+    const float RespawnTime = 5;
     float currentRespawnTime;
     bool hasBeenGrabbed;
 
@@ -51,11 +52,11 @@ public class GrabbableObject : MonoBehaviour
 
     public void Throw(Vector3 force)
     {
-        transform.position += force.normalized;
+        transform.position += force.normalized * 0.25f;
         thrownCollider.enabled = true;
         rigidbody.isKinematic = false;
         rigidbody.constraints = RigidbodyConstraints.None;
-        rigidbody.AddForce(force, ForceMode.VelocityChange);
+        rigidbody.AddForce(force, ForceMode.Impulse);
         Invoke("ResetGrabbable", GrabbableResetTime);
     }
 
@@ -73,5 +74,14 @@ public class GrabbableObject : MonoBehaviour
         rigidbody.rotation = Quaternion.identity;
         restingCollider.enabled = true;
         thrownCollider.enabled = false;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (canBreakObjects && collision.collider.tag == "Breakable")
+        {
+            var breakable = collision.collider.GetComponent<BreakableObject>();
+            breakable.Break(-collision.contacts[0].normal);
+        }
     }
 }
