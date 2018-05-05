@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public GameObject grabbableMarkerPrefab;
     public Transform grabHoldPoint;
     public Transform centerPoint;
+    public Animator animator;
 
     public delegate void InjuryHandler(int injuryLevel);
     public event InjuryHandler OnInjuryUpdate;
@@ -101,7 +102,18 @@ public class PlayerController : MonoBehaviour
         cameraForward.y = 0;
 
         Vector3 move = cameraRight.normalized * Input.GetAxis("Horizontal") + cameraForward.normalized * Input.GetAxis("Vertical");
+        if (move.magnitude > 1)
+        {
+            move.Normalize();
+        }
         rigidbody.AddForce(move * moveForce, ForceMode.VelocityChange);
+
+        bool isMoving = move.magnitude > 0.01;
+        animator.SetBool("isMoving", isMoving);
+        if (isMoving)
+        {
+            mesh.transform.forward = Vector3.Lerp(mesh.transform.forward, move.normalized, meshLerpSpeed);
+        }
     }
 
     void ApplyFakeGravity()
@@ -131,8 +143,9 @@ public class PlayerController : MonoBehaviour
 
     void Faint()
     {
+        animator.SetTrigger("faint");
         rigidbody.constraints = RigidbodyConstraints.None;
-        rigidbody.drag = 1;
+        //rigidbody.drag = 10;
         IsFainted = true;
         Vector3 randomDirection = Random.insideUnitSphere;
         rigidbody.AddForce(randomDirection * faintForce, ForceMode.VelocityChange);

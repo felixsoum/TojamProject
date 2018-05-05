@@ -45,7 +45,7 @@ public class PlayerCamera : MonoBehaviour
             transform.position = camTarget;
 
             offset.y = Mathf.Lerp(offset.y, 0.5f, faintLerpSpeed * Time.deltaTime);
-            offset.z = Mathf.Lerp(offset.z, -3.5f, faintLerpSpeed * Time.deltaTime);
+            offset.z = Mathf.Lerp(offset.z, -1.5f, faintLerpSpeed * Time.deltaTime);
             rotX = Mathf.Lerp(rotX, 10, faintLerpSpeed * Time.deltaTime);
         }
 
