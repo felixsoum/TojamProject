@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public float throwForce = 10;
     public float timeUntilLevelEnd = 3;
     public float injuryTimeReset = 1;
+    public float throwExtraHeight = 0.2f;
 
     public GameObject mesh;
     public GameObject grabbableMarkerPrefab;
@@ -245,7 +246,14 @@ public class PlayerController : MonoBehaviour
             isGrabbing = false;
             currentGrabbable.transform.parent = null;
             var grabbable = currentGrabbable.GetComponent<GrabbableObject>();
-            grabbable.Throw(mesh.transform.forward * throwForce);
+
+            Vector3 cameraForward = Camera.main.transform.forward;
+            Vector3 cameraProjectedForward = cameraForward;
+            cameraProjectedForward.y = 0;
+            Vector3 cameraForwardCorrectedUp = cameraForward + Vector3.up * throwExtraHeight;
+
+            mesh.transform.forward = cameraProjectedForward.normalized;
+            grabbable.Throw(cameraForwardCorrectedUp * throwForce);
             animator.SetTrigger("throw");
         }
     }

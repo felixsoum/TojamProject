@@ -2350,6 +2350,7 @@ MonoBehaviour:
   throwForce: 20
   timeUntilLevelEnd: 3
   injuryTimeReset: 1
+  throwExtraHeight: 0.3
   mesh: {fileID: 1448286223804828}
   grabbableMarkerPrefab: {fileID: 1333794003482286, guid: 2f5d3c2cfa411ea48b9c6053f697a0d0,
     type: 2}

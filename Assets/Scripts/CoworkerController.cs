@@ -13,6 +13,7 @@ public class CoworkerController : MonoBehaviour
     public float punchBreakDistance = 3;
     public float groundDistance = 0.1f;
     public float extraGravity = 100;
+    public float reactionCooldownDuration = 2;
 
     public Animator animator;
 
@@ -21,6 +22,7 @@ public class CoworkerController : MonoBehaviour
     CoworkerState state = CoworkerState.Idle;
     new Rigidbody rigidbody;
     bool isHarmful;
+    float currentReactionCooldown;
 
     void Awake()
     {
@@ -35,6 +37,11 @@ public class CoworkerController : MonoBehaviour
 
     void Update()
     {
+        if (currentReactionCooldown > 0)
+        {
+            currentReactionCooldown = Mathf.Max(currentReactionCooldown - Time.deltaTime, 0);
+        }
+
         if (state == CoworkerState.Chase)
         {
             Vector3 chaseDir = playerController.transform.position - transform.position;
@@ -48,6 +55,7 @@ public class CoworkerController : MonoBehaviour
                 animator.SetTrigger("attack");
                 rigidbody.AddForce(chaseDir.normalized * attackLungeForce, ForceMode.VelocityChange);
                 isHarmful = true;
+                currentReactionCooldown = reactionCooldownDuration;
             }
             else
             {
@@ -102,7 +110,7 @@ public class CoworkerController : MonoBehaviour
 
     public void OnHit()
     {
-        if (state != CoworkerState.Chase)
+        if (state != CoworkerState.Chase && currentReactionCooldown == 0)
         {
             state = CoworkerState.Chase;
             agent.enabled = true;
