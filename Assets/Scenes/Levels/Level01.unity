@@ -618,7 +618,7 @@ Transform:
   m_LocalScale: {x: 1.1, y: 6, z: 1.1}
   m_Children: []
   m_Father: {fileID: 652288764}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &263187363
 MeshRenderer:
@@ -1139,8 +1139,8 @@ Transform:
   - {fileID: 1496968577}
   - {fileID: 601431148}
   - {fileID: 1994480436}
-  - {fileID: 1159848965}
   - {fileID: 263187362}
+  - {fileID: 1159848965}
   - {fileID: 2111630420}
   - {fileID: 127034009}
   - {fileID: 754969180}
@@ -1844,7 +1844,7 @@ GameObject:
   - component: {fileID: 1548589528}
   m_Layer: 0
   m_Name: SolidWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

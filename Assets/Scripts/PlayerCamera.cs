@@ -39,7 +39,12 @@ public class PlayerCamera : MonoBehaviour
                 {
                     continue;
                 }
-                desiredPosition = hit.point;
+                if (hit.collider.tag == "Wall")
+                {
+                    desiredPosition.x = hit.point.x;
+                    desiredPosition.y = (hit.point.y + desiredPosition.y) / 2f;
+                    desiredPosition.z = hit.point.z;
+                }
             }
             transform.position = desiredPosition;
 

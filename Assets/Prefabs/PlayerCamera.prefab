@@ -101,7 +101,7 @@ MonoBehaviour:
   rotX: 20
   maxRotX: 20
   rotSpeedX: 10
-  rotSpeedY: 30
+  rotSpeedY: 60
   faintLerpSpeed: 2
 --- !u!124 &124918160444345480
 Behaviour:
