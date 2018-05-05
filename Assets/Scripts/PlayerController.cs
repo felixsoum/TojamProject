@@ -144,8 +144,7 @@ public class PlayerController : MonoBehaviour
     void Faint()
     {
         animator.SetTrigger("faint");
-        rigidbody.constraints = RigidbodyConstraints.None;
-        //rigidbody.drag = 10;
+        rigidbody.constraints = RigidbodyConstraints.FreezePositionX & RigidbodyConstraints.FreezePositionZ & RigidbodyConstraints.FreezeRotation;
         IsFainted = true;
         Vector3 randomDirection = Random.insideUnitSphere;
         rigidbody.AddForce(randomDirection * faintForce, ForceMode.VelocityChange);

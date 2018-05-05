@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fefdcf8d8ea1a4aac001b87431dac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressForce: 15
+  pressForce: 30
   timeToReset: 1
   resetSpeed: 10
   velocityHitMinimum: 3
