@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 public class HitInfo
 {
     public int damage;
-    public Vector3 normal;
+    public Vector3 force;
 
     public HitInfo (int damage, Vector3 normal)
     {
         this.damage = damage;
-        this.normal = normal;
+        this.force = normal;
     }
 }
 
@@ -152,12 +152,16 @@ public class PlayerController : MonoBehaviour
 
     public void OnHit(HitInfo hitInfo)
     {
-        injuryLevel += hitInfo.damage;
-        injuryLevel = Mathf.Min(injuryLevel, 100);
-        OnInjuryUpdate(injuryLevel);
-        if (injuryLevel == 100)
+        if (!IsFainted)
         {
-            Faint();
+            injuryLevel += hitInfo.damage;
+            injuryLevel = Mathf.Min(injuryLevel, 100);
+            OnInjuryUpdate(injuryLevel);
+            rigidbody.AddForce(hitInfo.force, ForceMode.VelocityChange);
+            if (injuryLevel == 100)
+            {
+                Faint();
+            }
         }
     }
 

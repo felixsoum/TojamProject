@@ -83,5 +83,9 @@ public class GrabbableObject : MonoBehaviour
             var breakable = collision.collider.GetComponent<BreakableObject>();
             breakable.Break(-collision.contacts[0].normal);
         }
+        else if (collision.collider.tag == "Coworker")
+        {
+            collision.collider.GetComponent<CoworkerController>().OnHit();
+        }
     }
 }

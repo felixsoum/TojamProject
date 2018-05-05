@@ -51,7 +51,7 @@ public class PressMachine : MonoBehaviour, ITriggerable
         if (collision.gameObject.tag == "Player" && rigidbody.velocity.magnitude >= velocityHitMinimum)
         {
             var player = collision.gameObject.GetComponent<PlayerController>();
-            player.OnHit(new HitInfo(100, collision.contacts[0].normal));
+            player.OnHit(new HitInfo(100, Vector3.zero));
         }
     }
 }

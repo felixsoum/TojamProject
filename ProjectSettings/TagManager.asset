@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grabbable
   - Breakable
+  - Coworker
   layers:
   - Default
   - TransparentFX
