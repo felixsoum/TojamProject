@@ -9,5 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: ffba64f6f3e10074984c8ae3f61d64cd
   - enabled: 1
-    path: Assets/Scenes/Levels/DrinkingBirdLevel.unity
+    path: Assets/Scenes/Levels/Level01.unity
     guid: 03d54beca1d99034b95fd6c7d80497d0
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level02.unity
+    guid: 60d18e5433294e841a74cb9e93fb3e3e
