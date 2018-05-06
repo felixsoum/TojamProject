@@ -24,6 +24,8 @@ public class CoworkerController : MonoBehaviour
     public AudioSource punchSound;
     public AudioSource stabSound;
 
+    public AudioSource[] voices;
+
     PlayerController playerController;
     NavMeshAgent agent;
     CoworkerState state = CoworkerState.Idle;
@@ -199,11 +201,16 @@ public class CoworkerController : MonoBehaviour
 
     public void OnHit()
     {
-        if (!isPeaceful && state != CoworkerState.Chase && currentReactionCooldown == 0)
+        if (currentReactionCooldown == 0)
         {
-            state = CoworkerState.Chase;
-            PickupItem();
-            agent.enabled = true;
+            int randomVoiceIndex = Random.Range(0, voices.Length);
+            voices[randomVoiceIndex].Play();
+            if (!isPeaceful && state != CoworkerState.Chase)
+            {
+                state = CoworkerState.Chase;
+                PickupItem();
+                agent.enabled = true;
+            }
         }
     }
 
