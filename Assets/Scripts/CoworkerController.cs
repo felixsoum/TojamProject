@@ -15,7 +15,9 @@ public class CoworkerController : MonoBehaviour
     public float extraGravity = 100;
     public float reactionCooldownDuration = 2;
 
+    public Transform grabTransform;
     public Animator animator;
+    public GrabbableObject cake;
 
     PlayerController playerController;
     NavMeshAgent agent;
@@ -23,6 +25,8 @@ public class CoworkerController : MonoBehaviour
     new Rigidbody rigidbody;
     bool isHarmful;
     float currentReactionCooldown;
+    const float CakeDetectRange = 5;
+    const float CakeDetectAngle = 90;
 
     void Awake()
     {
@@ -40,9 +44,26 @@ public class CoworkerController : MonoBehaviour
         if (currentReactionCooldown > 0)
         {
             currentReactionCooldown = Mathf.Max(currentReactionCooldown - Time.deltaTime, 0);
+            if (currentReactionCooldown <= 0)
+            {
+                state = CoworkerState.Idle;
+                agent.enabled = true;
+            }
         }
 
-        if (state == CoworkerState.Chase)
+        if (state == CoworkerState.Idle)
+        {
+            if (cake)
+            {
+                float cakeDistance = Vector3.Distance(transform.position, cake.transform.position);
+                float cakeAngle = Vector3.Angle(transform.forward, cake.transform.position - transform.position);
+                if (cakeDistance <= CakeDetectRange && cakeAngle <= CakeDetectAngle && !cake.IsMoving())
+                {
+                    agent.destination = cake.transform.position;
+                }
+            }
+        }
+        else if (state == CoworkerState.Chase)
         {
             Vector3 chaseDir = playerController.transform.position - transform.position;
             if (chaseDir.magnitude <= attackRange)

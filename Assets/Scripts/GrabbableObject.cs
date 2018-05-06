@@ -60,6 +60,11 @@ public class GrabbableObject : MonoBehaviour
         Invoke("ResetGrabbable", GrabbableResetTime);
     }
 
+    public bool IsMoving()
+    {
+        return rigidbody.velocity.magnitude > 0.1;
+    }
+
     void ResetGrabbable()
     {
         IsGrabbable = true;
@@ -84,7 +89,10 @@ public class GrabbableObject : MonoBehaviour
         }
         else if (collision.collider.tag == "Coworker")
         {
-            collision.collider.GetComponent<CoworkerController>().OnHit();
+            if (IsMoving())
+            {
+                collision.collider.GetComponent<CoworkerController>().OnHit();
+            }
         }
     }
 }
