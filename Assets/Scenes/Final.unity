@@ -1370,7 +1370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9727c5ad345247643821887a65cac2dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
+  level: 2
 --- !u!4 &221983234
 Transform:
   m_ObjectHideFlags: 0
@@ -1698,6 +1698,7 @@ GameObject:
   - component: {fileID: 245752926}
   - component: {fileID: 245752925}
   - component: {fileID: 245752929}
+  - component: {fileID: 245752930}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1794,6 +1795,87 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelEndObject: {fileID: 1194988661}
+  levelJingle: {fileID: 245752930}
+--- !u!82 &245752930
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 245752924}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c70322534fbd4224db172cd94c33029d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!4 &247311335 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4571989587178866, guid: b69004f3244fd5244aad19f7e8d28c19,
@@ -3643,7 +3725,7 @@ Prefab:
     - target: {fileID: 114438484037474330, guid: b84e856da26b9334389ec7deabf020da,
         type: 2}
       propertyPath: isStartingWithHelm
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4822780358571134, guid: b84e856da26b9334389ec7deabf020da, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -5017,7 +5099,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1266642967197800, guid: 851a82fe61376254da1c664d0a6b50a3, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 851a82fe61376254da1c664d0a6b50a3, type: 2}
@@ -5361,7 +5443,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1418048227109314, guid: d42476820ed906347861985e08faaa40, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d42476820ed906347861985e08faaa40, type: 2}
@@ -8709,7 +8791,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1314792220
 Transform:
   m_ObjectHideFlags: 0
@@ -9742,6 +9824,10 @@ Prefab:
     - target: {fileID: 4090682594401246, guid: 642f38c90f333594e8c3481bc0422807, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973012290241502, guid: 642f38c90f333594e8c3481bc0422807, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 642f38c90f333594e8c3481bc0422807, type: 2}

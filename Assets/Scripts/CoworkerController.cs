@@ -203,8 +203,11 @@ public class CoworkerController : MonoBehaviour
     {
         if (currentReactionCooldown == 0)
         {
-            int randomVoiceIndex = Random.Range(0, voices.Length);
-            voices[randomVoiceIndex].Play();
+            if (voices.Length > 0)
+            {
+                int randomVoiceIndex = Random.Range(0, voices.Length);
+                voices[randomVoiceIndex].Play();
+            }
             if (!isPeaceful && state != CoworkerState.Chase)
             {
                 state = CoworkerState.Chase;

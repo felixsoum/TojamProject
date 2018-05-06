@@ -17,7 +17,6 @@ public class PlayerCamera : MonoBehaviour
 
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         player = GameObject.FindGameObjectWithTag("Player");
         rotY = player.transform.eulerAngles.y;
         playerController = player.GetComponent<PlayerController>();

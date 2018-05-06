@@ -27,8 +27,19 @@ public class GameDirector : MonoBehaviour
 
     SolutionToggler[] togglers;
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+
+            SceneManager.LoadScene("Main");
+        }
+    }
+
     void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         togglers = GetComponents<SolutionToggler>();
 
         foreach (var toggler in togglers)
@@ -67,7 +78,17 @@ public class GameDirector : MonoBehaviour
         {
             if (IsSolved(Solution.PunchedThroughGlass) && IsSolved(Solution.DoublePunched) && IsSolved(Solution.KnifeKill))
             {
-                Cursor.lockState = CursorLockMode.None;
+                SceneManager.LoadScene(Level.Final.ToString());
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
+        else if (level == Level.Final)
+        {
+            if (IsSolved(Solution.FinalEscape))
+            {
                 SceneManager.LoadScene("Main");
             }
             else

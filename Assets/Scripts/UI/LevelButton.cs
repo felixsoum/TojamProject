@@ -9,7 +9,7 @@ public class LevelButton : MonoBehaviour
 
     void Awake()
     {
-        text.text = levelName;
+        //text.text = levelName;
     }
 
     public void StartLevel()
