@@ -52,9 +52,12 @@ public class PressMachine : MonoBehaviour, ITriggerable
     {
         if (collision.gameObject.tag == "Player" && rigidbody.velocity.magnitude >= velocityHitMinimum)
         {
-            GameDirector.Solve(solution);
             var player = collision.gameObject.GetComponent<PlayerController>();
-            player.OnHit(new HitInfo(100, Vector3.zero));
+            if (!player.IsWearingHelm)
+            {
+                GameDirector.Solve(solution);
+                player.OnHit(new HitInfo(100, Vector3.zero));
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ public class CoworkerController : MonoBehaviour
     public float groundDistance = 0.1f;
     public float extraGravity = 100;
     public float reactionCooldownDuration = 2;
+    public bool isPeaceful;
 
     public Transform grabTransform;
     public Animator animator;
@@ -192,7 +193,7 @@ public class CoworkerController : MonoBehaviour
 
     public void OnHit()
     {
-        if (state != CoworkerState.Chase && currentReactionCooldown == 0)
+        if (!isPeaceful && state != CoworkerState.Chase && currentReactionCooldown == 0)
         {
             state = CoworkerState.Chase;
             PickupItem();
