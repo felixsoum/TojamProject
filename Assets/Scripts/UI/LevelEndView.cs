@@ -3,6 +3,7 @@
 public class LevelEndView : MonoBehaviour
 {
     public GameObject levelEndObject;
+    public AudioSource levelJingle;
 
     void Start()
     {
@@ -11,6 +12,7 @@ public class LevelEndView : MonoBehaviour
 
     private void OnLevelEnd()
     {
+        levelJingle.Play();
         levelEndObject.SetActive(true);
     }
 }

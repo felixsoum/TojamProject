@@ -21,6 +21,9 @@ public class CoworkerController : MonoBehaviour
     public GrabbableObject cake;
     public GameObject loot;
 
+    public AudioSource punchSound;
+    public AudioSource stabSound;
+
     PlayerController playerController;
     NavMeshAgent agent;
     CoworkerState state = CoworkerState.Idle;
@@ -149,15 +152,17 @@ public class CoworkerController : MonoBehaviour
         {
             GameDirector.Solve(Solution.KnifeKill);
             playerController.OnHit(new HitInfo(100, transform.forward * attackLungeForce));
-
+            stabSound.Play();
         }
         else if (playerController.InjuryLevel >= 50)
         {
+            punchSound.Play();
             GameDirector.Solve(Solution.DoublePunched);
             playerController.OnHit(new HitInfo(50, transform.forward * attackLungeForce));
         }
         else
         {
+            punchSound.Play();
             playerController.OnHit(new HitInfo(50, transform.forward * attackLungeForce));
         }
 

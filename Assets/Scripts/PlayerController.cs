@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public Transform centerPoint;
     public Animator animator;
 
+    public AudioSource boneBreaking;
+
     public delegate void InjuryHandler(int injuryLevel);
     public event InjuryHandler OnInjuryUpdate = delegate { };
 
@@ -171,6 +173,7 @@ public class PlayerController : MonoBehaviour
 
     void Faint()
     {
+        boneBreaking.Play();
         animator.ResetTrigger("throw");
         animator.SetTrigger("faint");
         rigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;

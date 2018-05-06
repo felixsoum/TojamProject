@@ -2,8 +2,11 @@
 
 public class BreakableObject : MonoBehaviour
 {
+    public AudioSource breakSound;
+
     new Rigidbody rigidbody;
     new Collider collider;
+    bool isBroken;
 
     void Awake()
     {
@@ -13,8 +16,13 @@ public class BreakableObject : MonoBehaviour
 
     public void Break(Vector3 breakNormal)
     {
-        collider.enabled = false;
-        rigidbody.isKinematic = false;
-        rigidbody.AddForce(breakNormal * 10, ForceMode.VelocityChange);
+        if (!isBroken)
+        {
+            isBroken = true;
+            breakSound.Play();
+            collider.enabled = false;
+            rigidbody.isKinematic = false;
+            rigidbody.AddForce(breakNormal * 10, ForceMode.VelocityChange);
+        }
     }
 }

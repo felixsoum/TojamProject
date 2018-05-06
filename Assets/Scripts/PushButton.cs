@@ -10,6 +10,8 @@ public class PushButton : MonoBehaviour
     public Material pushMat;
     public float timeBeforeRelease = 2;
 
+    public AudioSource buttonSound;
+
     Material releaseMat;
     int triggerCount;
     Vector3 initialScale;
@@ -45,6 +47,8 @@ public class PushButton : MonoBehaviour
     {
         if (releaseTimer == 0)
         {
+            buttonSound.Play();
+
             releaseTimer = timeBeforeRelease;
             buttonMesh.transform.localScale = new Vector3(initialScale.x, pushedScaleY, initialScale.z);
             buttonMeshRenderer.material = pushMat;

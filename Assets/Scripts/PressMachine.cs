@@ -10,6 +10,7 @@ public class PressMachine : MonoBehaviour, ITriggerable
     public float velocityHitMinimum = 5;
 
     public Solution solution;
+    public AudioSource pressSound;
 
     float timeSincePress;
     new Rigidbody rigidbody;
@@ -41,6 +42,7 @@ public class PressMachine : MonoBehaviour, ITriggerable
         rigidbody.isKinematic = false;
         timeSincePress = 0;
         rigidbody.AddForce(-transform.up * pressForce, ForceMode.VelocityChange);
+        pressSound.Play();
     }
 
     public void Trigger()
