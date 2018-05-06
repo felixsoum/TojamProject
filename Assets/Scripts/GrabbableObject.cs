@@ -4,6 +4,7 @@
 public class GrabbableObject : MonoBehaviour
 {
     public bool canBreakObjects = false;
+    public bool canMurder = false;
     Collider thrownCollider;
     new Rigidbody rigidbody;
     public bool IsGrabbable { get; private set; }
@@ -11,7 +12,7 @@ public class GrabbableObject : MonoBehaviour
     const float RespawnTime = 5;
     float currentRespawnTime;
     bool hasBeenGrabbed;
-
+    bool isHarmful;
     Vector3 initialPos;
     Quaternion initialRot;
 
@@ -40,6 +41,7 @@ public class GrabbableObject : MonoBehaviour
     {
         if (IsGrabbable)
         {
+            transform.localRotation = Quaternion.identity;
             IsGrabbable = false;
             rigidbody.velocity = Vector3.zero;
             rigidbody.rotation = Quaternion.identity;
@@ -50,8 +52,9 @@ public class GrabbableObject : MonoBehaviour
         }
     }
 
-    public void Throw(Vector3 force)
+    public void Throw(Vector3 force, bool isHarmful = true)
     {
+        this.isHarmful = isHarmful;
         transform.position += force.normalized * 0.25f;
         thrownCollider.enabled = true;
         rigidbody.isKinematic = false;
@@ -78,6 +81,7 @@ public class GrabbableObject : MonoBehaviour
         rigidbody.velocity = Vector3.zero;
         rigidbody.rotation = Quaternion.identity;
         thrownCollider.enabled = true;
+        isHarmful = false;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -87,7 +91,7 @@ public class GrabbableObject : MonoBehaviour
             var breakable = collision.collider.GetComponent<BreakableObject>();
             breakable.Break(-collision.contacts[0].normal);
         }
-        else if (collision.collider.tag == "Coworker")
+        else if (collision.collider.tag == "Coworker" && isHarmful)
         {
             if (IsMoving())
             {

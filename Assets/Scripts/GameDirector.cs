@@ -55,7 +55,7 @@ public class GameDirector : MonoBehaviour
         {
             if (IsSolved(Solution.DrinkingBirdPress) && IsSolved(Solution.ThrowOnButton) && IsSolved(Solution.BreakGlassWithPC))
             {
-                SceneManager.LoadScene(Level.PressMachine.ToString());
+                SceneManager.LoadScene(Level.KitchenWorkstation.ToString());
             }
             else
             {

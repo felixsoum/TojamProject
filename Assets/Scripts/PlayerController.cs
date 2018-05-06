@@ -158,6 +158,7 @@ public class PlayerController : MonoBehaviour
 
     void Faint()
     {
+        animator.ResetTrigger("throw");
         animator.SetTrigger("faint");
         rigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
         IsFainted = true;
@@ -229,10 +230,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && currentGrabbable)
         {
             isGrabbing = true;
-            var grabbable = currentGrabbable.GetComponent<GrabbableObject>();
-            grabbable.Grab();
             currentGrabbable.transform.parent = grabHoldPoint;
             currentGrabbable.transform.localPosition = Vector3.zero;
+            currentGrabbable.Grab();
             grabbableMarker.SetActive(false);
         }
     }

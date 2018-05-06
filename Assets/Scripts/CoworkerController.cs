@@ -23,10 +23,12 @@ public class CoworkerController : MonoBehaviour
     NavMeshAgent agent;
     CoworkerState state = CoworkerState.Idle;
     new Rigidbody rigidbody;
-    bool isHarmful;
     float currentReactionCooldown;
     const float CakeDetectRange = 5;
     const float CakeDetectAngle = 90;
+    const float PickItemRange = 2;
+    const float TimeToReleaseItem = 1;
+    GrabbableObject currentGrabbable;
 
     void Awake()
     {
@@ -75,8 +77,8 @@ public class CoworkerController : MonoBehaviour
                 state = CoworkerState.Attack;
                 animator.SetTrigger("attack");
                 rigidbody.AddForce(chaseDir.normalized * attackLungeForce, ForceMode.VelocityChange);
-                isHarmful = true;
                 currentReactionCooldown = reactionCooldownDuration;
+                Attack();
             }
             else
             {
@@ -87,25 +89,79 @@ public class CoworkerController : MonoBehaviour
         ApplyFakeGravity();
     }
 
-    void OnCollisionEnter(Collision collision)
+    void PickupItem()
     {
-        if (isHarmful && collision.collider.tag == "Player")
+        var hits = Physics.SphereCastAll(grabTransform.position, PickItemRange, Vector3.down, 0);
+
+
+        currentGrabbable = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (var hit in hits)
         {
-            isHarmful = false;
-            var hits = Physics.RaycastAll(transform.position, transform.forward, punchBreakDistance);
-            foreach (var hit in hits)
+            if (hit.collider.tag == "Grabbable")
             {
-                if (hit.collider.tag == "Breakable")
+                float distance = Vector3.Distance(hit.collider.transform.position, transform.position);
+                if (distance < closestDistance)
                 {
-                    hit.collider.GetComponent<BreakableObject>().Break(transform.forward);
+                    var grabbable = hit.collider.GetComponent<GrabbableObject>();
+                    if (grabbable && grabbable.IsGrabbable)
+                    {
+                        currentGrabbable = grabbable;
+                        closestDistance = distance;
+                    }
                 }
             }
-            var player = collision.collider.GetComponent<PlayerController>();
-            if (player.InjuryLevel >= 50)
+        }
+
+        if (currentGrabbable)
+        {
+            var grabbable = currentGrabbable.GetComponent<GrabbableObject>();
+            currentGrabbable.transform.parent = grabTransform;
+            currentGrabbable.transform.localPosition = Vector3.zero;
+            grabbable.Grab();
+        }
+    }
+
+    void DropItem()
+    {
+        if (currentGrabbable)
+        {
+            currentGrabbable.Throw(transform.forward, false);
+            currentGrabbable.transform.parent = null;
+            currentGrabbable = null;
+        }
+    }
+
+    void Attack()
+    {
+        var hits = Physics.RaycastAll(transform.position, transform.forward, punchBreakDistance);
+        foreach (var hit in hits)
+        {
+            if (hit.collider.tag == "Breakable")
             {
-                GameDirector.Solve(Solution.DoublePunched);
+                hit.collider.GetComponent<BreakableObject>().Break(transform.forward);
             }
-            player.OnHit(new HitInfo(50, transform.forward * attackLungeForce));
+        }
+        if (currentGrabbable && currentGrabbable.canMurder)
+        {
+            GameDirector.Solve(Solution.KnifeKill);
+            playerController.OnHit(new HitInfo(100, transform.forward * attackLungeForce));
+
+        }
+        else if (playerController.InjuryLevel >= 50)
+        {
+            GameDirector.Solve(Solution.DoublePunched);
+            playerController.OnHit(new HitInfo(50, transform.forward * attackLungeForce));
+        }
+        else
+        {
+            playerController.OnHit(new HitInfo(50, transform.forward * attackLungeForce));
+        }
+
+        if (currentGrabbable)
+        {
+            Invoke("DropItem", TimeToReleaseItem);
         }
     }
 
@@ -139,6 +195,7 @@ public class CoworkerController : MonoBehaviour
         if (state != CoworkerState.Chase && currentReactionCooldown == 0)
         {
             state = CoworkerState.Chase;
+            PickupItem();
             agent.enabled = true;
         }
     }
