@@ -14,7 +14,8 @@ public enum Solution
     ThrowOnButton = 1,
     BreakGlassWithPC = 2,
     PunchedThroughGlass = 3,
-    DoublePunched = 4
+    DoublePunched = 4,
+    KnifeKill = 5
 }
 
 public class GameDirector : MonoBehaviour
@@ -53,6 +54,17 @@ public class GameDirector : MonoBehaviour
         if (level == Level.PressMachine)
         {
             if (IsSolved(Solution.DrinkingBirdPress) && IsSolved(Solution.ThrowOnButton) && IsSolved(Solution.BreakGlassWithPC))
+            {
+                SceneManager.LoadScene(Level.PressMachine.ToString());
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
+        else if (level == Level.KitchenWorkstation)
+        {
+            if (IsSolved(Solution.PunchedThroughGlass) && IsSolved(Solution.DoublePunched) && IsSolved(Solution.KnifeKill))
             {
                 Cursor.lockState = CursorLockMode.None;
                 SceneManager.LoadScene("Main");

@@ -79,7 +79,12 @@ public class CoworkerController : MonoBehaviour
                     hit.collider.GetComponent<BreakableObject>().Break(transform.forward);
                 }
             }
-            collision.collider.GetComponent<PlayerController>().OnHit(new HitInfo(50, transform.forward * attackLungeForce));
+            var player = collision.collider.GetComponent<PlayerController>();
+            if (player.InjuryLevel >= 50)
+            {
+                GameDirector.Solve(Solution.DoublePunched);
+            }
+            player.OnHit(new HitInfo(50, transform.forward * attackLungeForce));
         }
     }
 

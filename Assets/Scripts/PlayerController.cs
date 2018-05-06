@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     GameObject grabbableMarker;
     new Rigidbody rigidbody;
     bool isGrabbing;
-    int injuryLevel;
+    public int InjuryLevel { get; private set; }
     bool isLevelEnded;
     float injuryTimer;
 
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     void ResetInjuryLevel()
     {
-        injuryLevel = 0;
+        InjuryLevel = 0;
         OnInjuryUpdate(0);
     }
 
@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
         {
             AddInjuryLevel(hitInfo.damage);
             rigidbody.AddForce(hitInfo.force, ForceMode.VelocityChange);
-            if (injuryLevel == 100)
+            if (InjuryLevel == 100)
             {
                 Faint();
             }
@@ -184,9 +184,9 @@ public class PlayerController : MonoBehaviour
 
     void AddInjuryLevel(int value)
     {
-        injuryLevel += value;
-        injuryLevel = Mathf.Min(injuryLevel, 100);
-        OnInjuryUpdate(injuryLevel);
+        InjuryLevel += value;
+        InjuryLevel = Mathf.Min(InjuryLevel, 100);
+        OnInjuryUpdate(InjuryLevel);
     }
 
     void FindGrabbable()
