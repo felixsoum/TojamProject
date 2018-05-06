@@ -89,7 +89,7 @@ public class GameDirector : MonoBehaviour
         {
             if (IsSolved(Solution.FinalEscape))
             {
-                SceneManager.LoadScene("Main");
+                SceneManager.LoadScene("Credits");
             }
             else
             {
