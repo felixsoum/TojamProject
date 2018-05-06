@@ -13899,3 +13899,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBreakObjects: 0
+  canMurder: 0

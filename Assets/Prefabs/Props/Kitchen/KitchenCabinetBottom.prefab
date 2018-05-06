@@ -9,45 +9,45 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1016027944844054}
+  m_RootGameObject: {fileID: 1333476590453488}
   m_IsPrefabParent: 1
---- !u!1 &1016027944844054
+--- !u!1 &1333476590453488
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4688975539882302}
-  - component: {fileID: 33745008995573136}
-  - component: {fileID: 65470120824103316}
-  - component: {fileID: 23098603368938632}
+  - component: {fileID: 4981706777976936}
+  - component: {fileID: 33239614121707864}
+  - component: {fileID: 23141660243188724}
+  - component: {fileID: 65362650653781894}
   m_Layer: 0
-  m_Name: KitchenCountertop
+  m_Name: KitchenCabinetBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4688975539882302
+--- !u!4 &4981706777976936
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1016027944844054}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 0.4, z: -10.3}
-  m_LocalScale: {x: 5, y: 0.8, z: 1}
+  m_GameObject: {fileID: 1333476590453488}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 3.533, y: 0.165, z: 1.326}
+  m_LocalScale: {x: 1, y: 0.99960625, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23098603368938632
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!23 &23141660243188724
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1016027944844054}
+  m_GameObject: {fileID: 1333476590453488}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -56,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f9bc3f6d1c1f40044941e422e601096e, type: 2}
+  - {fileID: 2100000, guid: afb5fdf1131f1e149bdcd466dbb0a297, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
@@ -76,22 +76,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33745008995573136
+--- !u!33 &33239614121707864
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1016027944844054}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65470120824103316
+  m_GameObject: {fileID: 1333476590453488}
+  m_Mesh: {fileID: 4300000, guid: afb5fdf1131f1e149bdcd466dbb0a297, type: 3}
+--- !u!65 &65362650653781894
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1016027944844054}
+  m_GameObject: {fileID: 1333476590453488}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.57036823, y: 0.45695755, z: 1.0290561}
+  m_Center: {x: 0, y: -0.00000001490116, z: -0.000000029802322}

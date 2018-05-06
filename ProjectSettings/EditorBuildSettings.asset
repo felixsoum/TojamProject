@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: ffba64f6f3e10074984c8ae3f61d64cd
   - enabled: 1
-    path: Assets/Scenes/Levels/PressMachine.unity
+    path: Assets/Scenes/PressMachine.unity
     guid: c6ea2f2edb1be2b4eb6e174459f66aa2
   - enabled: 1
-    path: Assets/Scenes/Levels/KitchenWorkstation.unity
+    path: Assets/Scenes/KitchenWorkstation.unity
     guid: 671b14968ed227f499270bdcc455d6a5
