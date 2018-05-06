@@ -59,5 +59,10 @@ public class PressMachine : MonoBehaviour, ITriggerable
                 player.OnHit(new HitInfo(100, Vector3.zero));
             }
         }
+
+        if (collision.gameObject.tag == "Coworker")
+        {
+            collision.gameObject.GetComponent<CoworkerController>().Kill();
+        }
     }
 }

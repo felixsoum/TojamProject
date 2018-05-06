@@ -15,7 +15,8 @@ public enum Solution
     BreakGlassWithPC = 2,
     PunchedThroughGlass = 3,
     DoublePunched = 4,
-    KnifeKill = 5
+    KnifeKill = 5,
+    FinalEscape = 6
 }
 
 public class GameDirector : MonoBehaviour

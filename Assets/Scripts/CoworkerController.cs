@@ -19,6 +19,7 @@ public class CoworkerController : MonoBehaviour
     public Transform grabTransform;
     public Animator animator;
     public GrabbableObject cake;
+    public GameObject loot;
 
     PlayerController playerController;
     NavMeshAgent agent;
@@ -199,5 +200,15 @@ public class CoworkerController : MonoBehaviour
             PickupItem();
             agent.enabled = true;
         }
+    }
+
+    public void Kill()
+    {
+        if (loot)
+        {
+            loot.SetActive(true);
+        }
+        DropItem();
+        gameObject.SetActive(false);
     }
 }
