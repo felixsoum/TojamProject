@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject mesh;
     public GameObject grabbableMarkerPrefab;
+    public GameObject helm;
     public Transform grabHoldPoint;
     public Transform centerPoint;
     public Animator animator;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
     public event SimpleHandler OnLevelEnd = delegate { };
     public event SimpleHandler OnLevelTransitionRequest = delegate { };
 
+    public bool IsWearingHelm { get; private set; }
     public bool IsFainted { get; private set; }
     GrabbableObject currentGrabbable;
     GameObject grabbableMarker;
@@ -101,6 +103,12 @@ public class PlayerController : MonoBehaviour
         {
             OnLevelTransitionRequest();
         }
+    }
+
+    public void WearHelm()
+    {
+        IsWearingHelm = true;
+        helm.SetActive(true);
     }
 
     void ResetInjuryLevel()
