@@ -9,6 +9,8 @@ public class PressMachine : MonoBehaviour, ITriggerable
     public float resetSpeed = 10;
     public float velocityHitMinimum = 5;
 
+    public Solution solution;
+
     float timeSincePress;
     new Rigidbody rigidbody;
     Vector3 initialPos;
@@ -50,6 +52,7 @@ public class PressMachine : MonoBehaviour, ITriggerable
     {
         if (collision.gameObject.tag == "Player" && rigidbody.velocity.magnitude >= velocityHitMinimum)
         {
+            GameDirector.Solve(solution);
             var player = collision.gameObject.GetComponent<PlayerController>();
             player.OnHit(new HitInfo(100, Vector3.zero));
         }

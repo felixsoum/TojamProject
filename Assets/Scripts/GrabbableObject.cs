@@ -4,7 +4,7 @@
 public class GrabbableObject : MonoBehaviour
 {
     public bool canBreakObjects = false;
-    public Collider thrownCollider;
+    Collider thrownCollider;
     new Rigidbody rigidbody;
     public bool IsGrabbable { get; private set; }
     const float GrabbableResetTime = 1;
@@ -18,6 +18,7 @@ public class GrabbableObject : MonoBehaviour
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        thrownCollider = GetComponent<Collider>();
         IsGrabbable = true;
         initialPos = transform.position;
         initialRot = transform.rotation;

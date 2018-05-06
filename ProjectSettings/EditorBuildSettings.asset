@@ -9,17 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: ffba64f6f3e10074984c8ae3f61d64cd
   - enabled: 1
-    path: Assets/Scenes/Levels/Level01.unity
-    guid: e08d9a1f8fd1ef6489929e41fbd3600b
+    path: Assets/Scenes/Levels/PressMachine.unity
+    guid: c6ea2f2edb1be2b4eb6e174459f66aa2
   - enabled: 1
-    path: Assets/Scenes/Levels/Level02.unity
-    guid: 6bd52f7dd6c7c8941b648cab77e59834
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level03.unity
-    guid: eb73ace51ff7a814b8dc07ba2e9c443b
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level04.unity
-    guid: a31eaa2caaa301f45bec3c669ecaeab0
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level05.unity
-    guid: 7f5dd3cd9dc34f04b914a39e52434307
+    path: Assets/Scenes/Levels/KitchenWorkstation.unity
+    guid: 671b14968ed227f499270bdcc455d6a5

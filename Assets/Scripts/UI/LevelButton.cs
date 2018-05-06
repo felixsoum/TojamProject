@@ -14,6 +14,7 @@ public class LevelButton : MonoBehaviour
 
     public void StartLevel()
     {
+        GameDirector.ResetSolutions();
         SceneManager.LoadScene(levelName);
     }
 }

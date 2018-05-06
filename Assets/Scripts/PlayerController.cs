@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class HitInfo
@@ -35,10 +33,11 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     public delegate void InjuryHandler(int injuryLevel);
-    public event InjuryHandler OnInjuryUpdate;
+    public event InjuryHandler OnInjuryUpdate = delegate { };
 
     public delegate void SimpleHandler();
-    public event SimpleHandler OnLevelEnd;
+    public event SimpleHandler OnLevelEnd = delegate { };
+    public event SimpleHandler OnLevelTransitionRequest = delegate { };
 
     public bool IsFainted { get; private set; }
     GrabbableObject currentGrabbable;
@@ -100,8 +99,7 @@ public class PlayerController : MonoBehaviour
 
         if (isLevelEnded && Input.GetMouseButtonDown(0))
         {
-            Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene("Main");
+            OnLevelTransitionRequest();
         }
     }
 
