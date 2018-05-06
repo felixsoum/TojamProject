@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class GrabbableObject : MonoBehaviour
 {
     public bool canBreakObjects = false;
-    public Collider restingCollider;
     public Collider thrownCollider;
     new Rigidbody rigidbody;
     public bool IsGrabbable { get; private set; }
@@ -43,7 +43,6 @@ public class GrabbableObject : MonoBehaviour
             rigidbody.velocity = Vector3.zero;
             rigidbody.rotation = Quaternion.identity;
             rigidbody.isKinematic = true;
-            restingCollider.enabled = false;
             thrownCollider.enabled = false;
             hasBeenGrabbed = true;
             currentRespawnTime = RespawnTime;
@@ -72,8 +71,7 @@ public class GrabbableObject : MonoBehaviour
         transform.rotation = initialRot;
         rigidbody.velocity = Vector3.zero;
         rigidbody.rotation = Quaternion.identity;
-        restingCollider.enabled = true;
-        thrownCollider.enabled = false;
+        thrownCollider.enabled = true;
     }
 
     void OnCollisionEnter(Collision collision)
