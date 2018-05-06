@@ -137,5 +137,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markerObject: {fileID: 1145894537143094}
   markerLerpSpeed: 10
-  initialHeight: 0.75
-  minHeight: 0.5
+  initialHeight: 0.6
+  minHeight: 0.3
