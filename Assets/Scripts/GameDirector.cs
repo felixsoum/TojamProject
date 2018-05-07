@@ -35,6 +35,8 @@ public class GameDirector : MonoBehaviour
         {
             SceneManager.LoadScene("Main");
         }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Awake()
@@ -81,7 +83,7 @@ public class GameDirector : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().OnLevelTransitionRequest += OnLevelTransitionRequest;
     }
 
-    private void OnLevelTransitionRequest()
+    public void OnLevelTransitionRequest()
     {
         if (CurrentLevel == Level.PressMachine)
         {
