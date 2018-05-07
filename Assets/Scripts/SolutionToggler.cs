@@ -8,17 +8,31 @@ public class SolutionToggler : MonoBehaviour
 
     public void Activate()
     {
-        foreach (var o in toActivate)
+        if (toActivate.Length > 0)
         {
-            o.SetActive(true);
+            foreach (var o in toActivate)
+            {
+                if (o)
+                {
+                    o.SetActive(true);
+
+                }
+            }
         }
     }
 
     public void Deactivate()
     {
-        foreach (var o in toDeactivate)
+        if (toDeactivate.Length > 0)
         {
-            o.SetActive(false);
+            foreach (var o in toDeactivate)
+            {
+                if (o)
+                {
+                    o.SetActive(false);
+
+                }
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public enum CoworkerState { Idle, Chase, Attack };
@@ -56,7 +54,10 @@ public class CoworkerController : MonoBehaviour
             if (currentReactionCooldown <= 0)
             {
                 state = CoworkerState.Idle;
-                agent.enabled = true;
+                if (transform.position.y > -0.1)
+                {
+                    agent.enabled = true;
+                }
             }
         }
 
@@ -68,7 +69,10 @@ public class CoworkerController : MonoBehaviour
                 float cakeAngle = Vector3.Angle(transform.forward, cake.transform.position - transform.position);
                 if (cakeDistance <= CakeDetectRange && cakeAngle <= CakeDetectAngle && !cake.IsMoving())
                 {
-                    agent.destination = cake.transform.position;
+                    if (transform.position.y > -0.1)
+                    {
+                        agent.destination = cake.transform.position;
+                    }
                 }
             }
         }
@@ -89,7 +93,10 @@ public class CoworkerController : MonoBehaviour
             }
             else
             {
-                agent.destination = playerController.transform.position;
+                if (transform.position.y > -0.1)
+                {
+                    agent.destination = playerController.transform.position;
+                }
             }
         }
         animator.SetBool("isRunning", agent.velocity.magnitude > minSpeedForRun);
@@ -125,7 +132,6 @@ public class CoworkerController : MonoBehaviour
         {
             var grabbable = currentGrabbable.GetComponent<GrabbableObject>();
             currentGrabbable.transform.parent = grabTransform;
-            currentGrabbable.transform.localPosition = Vector3.zero;
             grabbable.Grab();
         }
     }

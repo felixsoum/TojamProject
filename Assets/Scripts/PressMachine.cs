@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PressMachine : MonoBehaviour, ITriggerable
 {
@@ -11,6 +9,7 @@ public class PressMachine : MonoBehaviour, ITriggerable
 
     public Solution solution;
     public AudioSource pressSound;
+    public AudioSource hitSound;
 
     float timeSincePress;
     new Rigidbody rigidbody;
@@ -64,6 +63,7 @@ public class PressMachine : MonoBehaviour, ITriggerable
 
         if (collision.gameObject.tag == "Coworker")
         {
+            hitSound.Play();
             collision.gameObject.GetComponent<CoworkerController>().Kill();
         }
     }

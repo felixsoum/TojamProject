@@ -13,7 +13,7 @@ public class DrinkingBird : MonoBehaviour
 
     void Awake()
     {
-        initialRotX = transform.eulerAngles.x;
+        initialRotX = transform.localEulerAngles.x;
     }
 
     void Update()
@@ -37,6 +37,6 @@ public class DrinkingBird : MonoBehaviour
             }
         }
 
-        rotatingMesh.transform.eulerAngles = new Vector3(rotX, 0, 0);
+        rotatingMesh.transform.localEulerAngles = new Vector3(rotX, 0, 0);
     }
 }

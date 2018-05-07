@@ -16,6 +16,9 @@ public class GrabbableObject : MonoBehaviour
     Vector3 initialPos;
     Quaternion initialRot;
 
+    public Vector3 posOffset;
+    public Vector3 rotOffset;
+
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -41,7 +44,8 @@ public class GrabbableObject : MonoBehaviour
     {
         if (IsGrabbable)
         {
-            transform.localRotation = Quaternion.identity;
+            transform.localPosition = posOffset;
+            transform.localEulerAngles = rotOffset;
             IsGrabbable = false;
             rigidbody.velocity = Vector3.zero;
             rigidbody.rotation = Quaternion.identity;

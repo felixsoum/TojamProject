@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     public float timeUntilLevelEnd = 3;
     public float injuryTimeReset = 1;
     public float throwExtraHeight = 0.2f;
-    public bool isStartingWithHelm;
 
     public GameObject mesh;
     public GameObject grabbableMarkerPrefab;
@@ -58,7 +57,11 @@ public class PlayerController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         grabbableMarker = Instantiate(grabbableMarkerPrefab, transform.position, Quaternion.identity);
         grabbableMarker.SetActive(false);
-        if (isStartingWithHelm)
+    }
+
+    void Start()
+    {
+        if (GameDirector.CurrentLevel == Level.Final)
         {
             WearHelm();
         }
@@ -247,7 +250,6 @@ public class PlayerController : MonoBehaviour
         {
             isGrabbing = true;
             currentGrabbable.transform.parent = grabHoldPoint;
-            currentGrabbable.transform.localPosition = Vector3.zero;
             currentGrabbable.Grab();
             grabbableMarker.SetActive(false);
         }

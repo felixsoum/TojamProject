@@ -15,7 +15,7 @@ public class PlayerCamera : MonoBehaviour
     PlayerController playerController;
     float rotY;
 
-    void Awake()
+    void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         rotY = player.transform.eulerAngles.y;

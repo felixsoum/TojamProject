@@ -21,17 +21,18 @@ public enum Solution
 
 public class GameDirector : MonoBehaviour
 {
-    public Level level;
+    public static Level CurrentLevel = Level.PressMachine;
 
     static bool[] isSolved = new bool[10];
 
+    public GameObject[] finalToggleToActivate;
+    public GameObject[] finalToggleToDeactivate;
     SolutionToggler[] togglers;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
             SceneManager.LoadScene("Main");
         }
     }
@@ -58,48 +59,55 @@ public class GameDirector : MonoBehaviour
             }
         }
 
+        if (CurrentLevel == Level.Final)
+        {
+            if (finalToggleToActivate.Length > 0)
+            {
+                foreach (var o in finalToggleToActivate)
+                {
+                    o.SetActive(true);
+                }
+            }
+
+            if (finalToggleToDeactivate.Length > 0)
+            {
+                foreach (var o in finalToggleToDeactivate)
+                {
+                    o.SetActive(false);
+                }
+            }
+        }
+
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().OnLevelTransitionRequest += OnLevelTransitionRequest;
     }
 
     private void OnLevelTransitionRequest()
     {
-        if (level == Level.PressMachine)
+        if (CurrentLevel == Level.PressMachine)
         {
             if (IsSolved(Solution.DrinkingBirdPress) && IsSolved(Solution.ThrowOnButton) && IsSolved(Solution.BreakGlassWithPC))
             {
-                SceneManager.LoadScene(Level.KitchenWorkstation.ToString());
+                CurrentLevel = Level.KitchenWorkstation;
             }
-            else
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        else if (level == Level.KitchenWorkstation)
+        else if (CurrentLevel == Level.KitchenWorkstation)
         {
             if (IsSolved(Solution.PunchedThroughGlass) && IsSolved(Solution.DoublePunched) && IsSolved(Solution.KnifeKill))
             {
-                SceneManager.LoadScene(Level.Final.ToString());
+                CurrentLevel = Level.Final;
             }
-            else
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        else if (level == Level.Final)
+        else if (CurrentLevel == Level.Final)
         {
-            if (IsSolved(Solution.FinalEscape))
-            {
-                SceneManager.LoadScene("Credits");
-            }
-            else
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+            SceneManager.LoadScene("Credits");
         }
     }
 
-    public static void ResetSolutions()
+    public static void ResetGame()
     {
+        CurrentLevel = Level.PressMachine;
         for (int i = 0; i < isSolved.Length; i++)
         {
             isSolved[i] = false;

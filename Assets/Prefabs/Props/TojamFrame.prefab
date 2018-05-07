@@ -226,3 +226,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBreakObjects: 0
   canMurder: 0
+  posOffset: {x: -0.081, y: 0.1, z: -0.039}
+  rotOffset: {x: -12.779, y: 65.781, z: 95.682}
